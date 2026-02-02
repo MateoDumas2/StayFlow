@@ -1,0 +1,208 @@
+{
+  "header": {
+    "search_placeholder": "Where do you want to go?",
+    "become_host": "Become a Host",
+    "language": "Language",
+    "search_destinations": "Search Destinations",
+    "clear": "Clear",
+    "streak": "Streak"
+  },
+  "user_menu": {
+    "your_account": "Your Account",
+    "view_profile": "View My Profile",
+    "integrations": "Integrations",
+    "logout": "Log Out",
+    "login": "Log In",
+    "register": "Sign Up",
+    "accessibility": "Accessibility (A11y)",
+    "dyslexic": "Dyslexic Friendly",
+    "dyslexic_desc": "Font for easier reading",
+    "high_contrast": "High Contrast",
+    "high_contrast_desc": "Stronger colors",
+    "reduced_motion": "Reduced Motion",
+    "reduced_motion_desc": "Less animations"
+  },
+  "streak": {
+    "title": "Travel Streak",
+    "description": "You've opened the app {{streak}} days in a row! Keep it up to earn exclusive discounts.",
+    "next_reward": "Next reward in {{days}} days"
+  },
+  "dashboard": {
+    "welcome": "Hello, {{name}}",
+    "ready": "Ready for your next adventure?",
+    "kms": "Kms",
+    "cities": "Cities",
+    "reviews": "Reviews",
+    "my_trips": "My Trips",
+    "view_all": "View All",
+    "distance": "Distance",
+    "edit_profile": "Edit Profile",
+    "save_changes": "Save Changes",
+    "cancel": "Cancel",
+    "full_name": "Full Name",
+    "email": "Email",
+    "avatar_url": "Avatar URL",
+    "new_password": "New Password (Optional)",
+    "password_placeholder": "Leave blank to keep current",
+    "paste_image": "Paste an image URL below to change",
+    "passport": "StayFlow Passport",
+    "current_level": "Current Level",
+    "points_to_next": "You need {{points}} points for the next level. Book one more trip!",
+    "achievements": "Unlocked Achievements"
+  },
+  "listings": {
+    "no_results": "No results found",
+    "try_clearing": "Try changing the mood or clearing filters.",
+    "night": "night",
+    "available": "Available",
+    "booked": "Booked",
+    "pending": "Pending",
+    "blocked": "Blocked"
+  },
+  "auth": {
+    "welcome_back": "Welcome Back",
+    "create_account": "Create Account",
+    "name_label": "Name",
+    "name_placeholder": "Your full name",
+    "email_label": "Email",
+    "email_placeholder": "youremail@example.com",
+    "password_label": "Password",
+    "processing": "Processing...",
+    "no_account": "Don't have an account?",
+    "already_have_account": "Already have an account?",
+    "register_link": "Sign up",
+    "login_link": "Log in",
+    "role_label": "I want to be",
+    "role_guest": "Guest (Book)",
+    "role_host": "Host (List)",
+    "role_both": "Both"
+  },
+  "booking": {
+    "night": "/ night",
+    "check_in": "Check-in",
+    "check_out": "Check-out",
+    "guests": "Guests",
+    "guest_1": "1 guest",
+    "guest_n": "{{count}} guests",
+    "reserve_button": "Reserve",
+    "no_charge": "You won't be charged yet",
+    "cleaning_fee": "Cleaning fee",
+    "service_fee": "Service fee",
+    "total": "Total",
+    "select_valid_dates": "Please select valid dates",
+    "enter_valid_card": "Please enter a valid card number",
+    "error_creating": "Error creating booking"
+  },
+  "voice": {
+    "not_supported": "Your browser does not support voice recognition. Try Chrome.",
+    "listening": "Listening...",
+    "not_understood": "Didn't understand. Try again.",
+    "button_title": "Search by voice"
+  },
+  "home": {
+    "categories": {
+      "all": "All",
+      "relax": "Relax",
+      "adventure": "Adventure",
+      "romantic": "Romantic",
+      "luxury": "Luxury",
+      "nature": "Nature",
+      "urban": "Urban"
+    },
+    "explore_title": "Explore Unique Stays",
+    "explore_subtitle": "Find places that fit your style."
+  },
+  "chat": {
+    "intro": "Hi! I'm your StayFlow AI Concierge. ✨ How can I help you today?",
+    "bot_response_beach": "I love the beach! 🌊 Here is an amazing option by the sea.",
+    "bot_response_default": "Understood. Would you like to see options for a romantic getaway or something more adventurous?",
+    "options": {
+      "romantic": "Romantic Getaway",
+      "adventure": "Adventure",
+      "relax": "Relax"
+    }
+  },
+  "itinerary": {
+    "title": "GenAI Itinerary",
+    "description": "Let our AI create the perfect 3-day plan for your trip to {{location}}.",
+    "generate_btn": "✨ Generate Travel Plan",
+    "steps": {
+      "starting": "Starting...",
+      "analyzing": "Analyzing location...",
+      "restaurants": "Finding local restaurants...",
+      "activities": "Discovering hidden gems...",
+      "routes": "Calculating optimal routes...",
+      "pdf": "Designing PDF...",
+      "done": "Done!"
+    },
+    "ready_title": "Your itinerary is ready!",
+    "download_pdf": "📄 Download PDF",
+    "generate_new": "Generate new"
+  },
+  "auction": {
+    "active": "🔥 Auction Active",
+    "ends_in": "Ends in:"
+  },
+  "ai_describer": {
+    "button": "AI: Describe image",
+    "analyzing": "Analyzing scene...",
+    "completed": "Analysis Completed",
+    "confidence": "Confidence: 98%",
+    "objects": "Objects: 12",
+    "descriptions": {
+      "1": "A spacious {{context}} illuminated by natural light, with floor-to-ceiling windows offering a panoramic view of the garden. The decor is minimalist with beige tones and light wood.",
+      "2": "Cozy corner of {{context}} with stone fireplace and wool rugs. Ideal for winter, with warm lighting and high-quality rustic furniture.",
+      "3": "Modern {{context}} with industrial design, exposed brick walls, and steel beams. Features an open-concept kitchen and contemporary art on the walls.",
+      "4": "Exterior of {{context}} at sunset, highlighting an infinity pool merging with the sea horizon. Palm trees and white loungers complete the relaxing atmosphere."
+    }
+  },
+  "collaborative_board": {
+    "title": "Board: Summer 2026",
+    "collaborators": "{{count}} friends collaborating",
+    "winning": "👑 Winning",
+    "add_property": "+ Add property to board"
+  },
+  "leaderboard": {
+    "title": "🏆 Top Explorers",
+    "you": "(You)",
+    "countries": "countries",
+    "cities": "cities",
+    "view_full": "View full ranking"
+  },
+  "listing_page": {
+    "host_title": "Host: StayFlow Superhost",
+    "host_details": "2 years hosting • Response rate: 100%",
+    "about_title": "About this place",
+    "default_description": "Enjoy an unforgettable stay in this unique property. Equipped with everything needed for your comfort and located in a privileged area.",
+    "amenities_title": "What this place offers",
+    "standard_amenities": "Standard amenities included.",
+    "location_title": "Where you'll be",
+    "reviews_count_label": "reviews",
+    "no_reviews": "No reviews yet for this listing.",
+    "show_all_reviews": "Show all {{count}} reviews",
+    "price_history_title": "Price History",
+    "price_trend": "Price trend for this property",
+    "current_price": "Current Price",
+    "average_price": "Average Price",
+    "ai_tip_label": "AI Tip:",
+    "ai_tip_text": "Prices usually drop 15% in October. If you are flexible, you could save."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    }
+  }
+}

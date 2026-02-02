@@ -1,0 +1,30 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    :root {
+      --sf-primary: #FF385C;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --sf-primary: #4FB0FF;
+      }
+    }
+  </style>
+  <path 
+    d="M16 2L2 14H6V26C6 27.1 6.9 28 8 28H24C25.1 28 26 27.1 26 26V14H30L16 2Z" 
+    fill="#FF385C" 
+    opacity="0.2"
+  />
+  <path 
+    d="M16 6L26 15V26C26 27.1046 25.1046 28 24 28H8C6.89543 28 6 27.1046 6 26V15L16 6Z" 
+    stroke="#FF385C" 
+    stroke-width="2" 
+    stroke-linejoin="round"
+  />
+  <path 
+    d="M9 22C9 22 11.5 19 16 19C20.5 19 23 22 23 22" 
+    stroke="#FF385C" 
+    stroke-width="2.5" 
+    stroke-linecap="round"
+  />
+  <circle cx="16" cy="14" r="2" fill="#FF385C" />
+</svg>

@@ -1,0 +1,208 @@
+{
+  "header": {
+    "search_placeholder": "¿A dónde quieres ir?",
+    "become_host": "Hazte anfitrión",
+    "language": "Idioma",
+    "search_destinations": "Buscar Destinos",
+    "clear": "Limpiar",
+    "streak": "Racha"
+  },
+  "user_menu": {
+    "your_account": "Tu cuenta",
+    "view_profile": "Ver mi perfil",
+    "integrations": "Integraciones",
+    "logout": "Cerrar Sesión",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "accessibility": "Accesibilidad (A11y)",
+    "dyslexic": "Lectura Fácil",
+    "dyslexic_desc": "Fuente amigable para dislexia",
+    "high_contrast": "Alto Contraste",
+    "high_contrast_desc": "Colores más fuertes",
+    "reduced_motion": "Reducir Movimiento",
+    "reduced_motion_desc": "Menos animaciones"
+  },
+  "streak": {
+    "title": "Racha Viajera",
+    "description": "¡Has abierto la app {{streak}} días seguidos! Mantén la racha para ganar descuentos exclusivos.",
+    "next_reward": "Próximo premio en {{days}} días"
+  },
+  "dashboard": {
+    "welcome": "Hola, {{name}}",
+    "ready": "¡Listo para tu próxima aventura?",
+    "kms": "Kms",
+    "cities": "Ciudades",
+    "reviews": "Reseñas",
+    "my_trips": "Mis Viajes",
+    "view_all": "Ver todos",
+    "distance": "Distancia",
+    "edit_profile": "Editar Perfil",
+    "save_changes": "Guardar Cambios",
+    "cancel": "Cancelar",
+    "full_name": "Nombre Completo",
+    "email": "Email",
+    "avatar_url": "URL del Avatar",
+    "new_password": "Nueva Contraseña (Opcional)",
+    "password_placeholder": "Dejar en blanco para mantener actual",
+    "paste_image": "Pega una URL de imagen abajo para cambiar",
+    "passport": "Pasaporte StayFlow",
+    "current_level": "Nivel Actual",
+    "points_to_next": "Te faltan {{points}} puntos para el siguiente nivel. ¡Reserva un viaje más!",
+    "achievements": "Logros Desbloqueados"
+  },
+  "listings": {
+    "no_results": "No encontramos resultados",
+    "try_clearing": "Intenta cambiar el mood o limpiar los filtros.",
+    "night": "noche",
+    "available": "Disponible",
+    "booked": "Reservado",
+    "pending": "Pendiente",
+    "blocked": "No disponible"
+  },
+  "auth": {
+    "welcome_back": "Bienvenido de nuevo",
+    "create_account": "Crear cuenta",
+    "name_label": "Nombre",
+    "name_placeholder": "Tu nombre completo",
+    "email_label": "Email",
+    "email_placeholder": "tucorreo@ejemplo.com",
+    "password_label": "Contraseña",
+    "processing": "Procesando...",
+    "no_account": "¿No tienes cuenta?",
+    "already_have_account": "¿Ya tienes cuenta?",
+    "register_link": "Regístrate",
+    "login_link": "Inicia sesión",
+    "role_label": "Quiero ser",
+    "role_guest": "Huésped (Reservar)",
+    "role_host": "Anfitrión (Publicar)",
+    "role_both": "Ambos"
+  },
+  "booking": {
+    "night": "/ noche",
+    "check_in": "Llegada",
+    "check_out": "Salida",
+    "guests": "Huéspedes",
+    "guest_1": "1 huésped",
+    "guest_n": "{{count}} huéspedes",
+    "reserve_button": "Reservar",
+    "no_charge": "No se te cobrará todavía",
+    "cleaning_fee": "Limpieza",
+    "service_fee": "Servicio",
+    "total": "Total",
+    "select_valid_dates": "Por favor selecciona fechas válidas",
+    "enter_valid_card": "Por favor ingresa un número de tarjeta válido",
+    "error_creating": "Error al crear la reserva"
+  },
+  "voice": {
+    "not_supported": "Tu navegador no soporta reconocimiento de voz. Intenta usar Chrome.",
+    "listening": "Escuchando...",
+    "not_understood": "No te entendí. Intenta de nuevo.",
+    "button_title": "Buscar por voz"
+  },
+  "home": {
+    "categories": {
+      "all": "Todos",
+      "relax": "Relax",
+      "adventure": "Aventura",
+      "romantic": "Romántico",
+      "luxury": "Lujo",
+      "nature": "Naturaleza",
+      "urban": "Urbano"
+    },
+    "explore_title": "Explora estancias únicas",
+    "explore_subtitle": "Encuentra lugares que se adaptan a tu estilo."
+  },
+  "chat": {
+    "intro": "¡Hola! Soy tu Concierge IA de StayFlow. ✨ ¿En qué puedo ayudarte hoy?",
+    "bot_response_beach": "¡Me encanta la playa! 🌊 Aquí tienes una opción increíble frente al mar.",
+    "bot_response_default": "Entendido. ¿Te gustaría ver opciones para una escapada romántica o algo más aventurero?",
+    "options": {
+      "romantic": "Escapada Romántica",
+      "adventure": "Aventura",
+      "relax": "Relax"
+    }
+  },
+  "itinerary": {
+    "title": "Itinerario GenAI",
+    "description": "Deja que nuestra IA cree el plan perfecto de 3 días para tu viaje a {{location}}.",
+    "generate_btn": "✨ Generar Plan de Viaje",
+    "steps": {
+      "starting": "Iniciando...",
+      "analyzing": "Analizando ubicación...",
+      "restaurants": "Buscando restaurantes locales...",
+      "activities": "Encontrando actividades ocultas...",
+      "routes": "Calculando rutas óptimas...",
+      "pdf": "Diseñando PDF...",
+      "done": "¡Listo!"
+    },
+    "ready_title": "¡Tu itinerario está listo!",
+    "download_pdf": "📄 Descargar PDF",
+    "generate_new": "Generar nuevo"
+  },
+  "auction": {
+    "active": "🔥 Subasta Activa",
+    "ends_in": "Termina en:"
+  },
+  "ai_describer": {
+    "button": "IA: Describir imagen",
+    "analyzing": "Analizando escena...",
+    "completed": "Análisis Completado",
+    "confidence": "Confianza: 98%",
+    "objects": "Objetos: 12",
+    "descriptions": {
+      "1": "Una espaciosa {{context}} iluminada por luz natural, con ventanales de piso a techo que ofrecen una vista panorámica al jardín. La decoración es minimalista con tonos beige y madera clara.",
+      "2": "Acogedor rincón de {{context}} con chimenea de piedra y alfombras de lana. Ideal para el invierno, con iluminación cálida y muebles rústicos de alta calidad.",
+      "3": "Moderna {{context}} de diseño industrial, paredes de ladrillo visto y vigas de acero. Cuenta con una cocina de concepto abierto y arte contemporáneo en las paredes.",
+      "4": "Exterior de {{context}} al atardecer, destacando una piscina infinita que se funde con el horizonte del mar. Palmeras y tumbonas blancas completan el ambiente relajante."
+    }
+  },
+  "collaborative_board": {
+    "title": "Tablero: Verano 2026",
+    "collaborators": "{{count}} amigos colaborando",
+    "winning": "👑 Ganando",
+    "add_property": "+ Agregar propiedad al tablero"
+  },
+  "leaderboard": {
+    "title": "🏆 Top Exploradores",
+    "you": "(Tú)",
+    "countries": "países",
+    "cities": "ciudades",
+    "view_full": "Ver ranking completo"
+  },
+  "listing_page": {
+    "host_title": "Anfitrión: StayFlow Superhost",
+    "host_details": "2 años hospedando • Tasa de respuesta: 100%",
+    "about_title": "Acerca de este alojamiento",
+    "default_description": "Disfruta de una estancia inolvidable en esta propiedad única. Equipada con todo lo necesario para tu confort y ubicada en una zona privilegiada.",
+    "amenities_title": "Lo que ofrece este lugar",
+    "standard_amenities": "Servicios estándar incluidos.",
+    "location_title": "A dónde irás",
+    "reviews_count_label": "evaluaciones",
+    "no_reviews": "Aún no hay reseñas para este alojamiento.",
+    "show_all_reviews": "Mostrar las {{count}} evaluaciones",
+    "price_history_title": "Historial de Precios",
+    "price_trend": "Tendencia de precios para esta propiedad",
+    "current_price": "Precio Actual",
+    "average_price": "Precio Promedio",
+    "ai_tip_label": "Consejo de IA:",
+    "ai_tip_text": "Los precios suelen bajar un 15% en Octubre. Si tienes flexibilidad, podrías ahorrar."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "months": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Ago",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dic"
+    }
+  }
+}

@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  /* --- LIGHT MODE (Default) --- */
+  
+  /* Backgrounds */
+  --sf-bg: #FFFFFF;
+  --sf-surface: #FFFFFF;
+  --sf-surface-2: #F7F7F7;
+  --sf-border: #DDDDDD;
+
+  /* Primary (Rose/Coral) */
+  --sf-primary: #FF385C;
+  --sf-primary-600: #D90B3E; /* Darker variant for hover */
+  --sf-primary-100: #FFE4E6; /* Soft background */
+
+  /* Secondary (Teal) */
+  --sf-teal: #008489;
+  --sf-teal-600: #006C70;
+  --sf-teal-100: #E0F2F1;
+
+  /* Accents */
+  --sf-ember: #FFB400;
+  --sf-ember-600: #E69900;
+
+  /* Text */
+  --sf-text: #222222;       /* Was --sf-ink */
+  --sf-text-muted: #717171; /* Was --sf-gray */
+  --sf-text-dim: #9CA3AF;
+
+  /* Status */
+  --sf-success: #10B981;
+  --sf-error: #E11D48;
+  --sf-warning: #F59E0B;
+  --sf-blocked: #9CA3AF;
+
+  /* Shadows */
+  --sf-shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --sf-shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Legacy aliases for backward compatibility if needed */
+  --sf-canvas: var(--sf-bg);
+  --sf-white: var(--sf-surface);
+  --sf-ink: var(--sf-text);
+  --sf-gray: var(--sf-text-muted);
+  --sf-gray-light: var(--sf-border);
+  --sf-secondary: var(--sf-teal);
+  --sf-secondary-dark: var(--sf-teal-600);
+  --sf-secondary-soft: var(--sf-teal-100);
+  --sf-primary-dark: var(--sf-primary-600);
+  --sf-primary-soft: var(--sf-primary-100);
+}
+
+:root[data-theme="dark"] {
+  /* --- DARK MODE (User Specs) --- */
+  
+  /* Backgrounds */
+  --sf-bg: #071026; 
+  --sf-surface: #0B1220; 
+  --sf-surface-2: #0F1724; 
+  --sf-border: rgba(255,255,255,0.06); 
+
+  /* Primary (Blue) */
+  --sf-primary: #4FB0FF; 
+  --sf-primary-600: #0A84FF; 
+  --sf-primary-100: rgba(79,176,255,0.12); 
+
+  /* Secondary (Teal) */
+  --sf-teal: #32E0B0; 
+  --sf-teal-600: #00C2A8; 
+  --sf-teal-100: rgba(50,224,176,0.08); 
+
+  /* Accents */
+  --sf-ember: #FFB020; 
+  --sf-ember-600: #FF9500; 
+
+  /* Text */
+  --sf-text: #E6EEF9; 
+  --sf-text-muted: #94A3B8; 
+  --sf-text-dim: #7B8797; 
+
+  /* Status */
+  --sf-success: #22C55E; 
+  --sf-error: #EF4444; 
+  --sf-warning: #F59E0B; 
+  --sf-blocked: #697580; 
+
+  /* Shadows */
+  --sf-shadow-1: 0 6px 20px rgba(2,8,23,0.6); 
+  --sf-shadow-2: 0 12px 40px rgba(2,8,23,0.7);
+
+  /* Legacy aliases updates */
+  --sf-canvas: var(--sf-bg);
+  --sf-white: var(--sf-surface);
+  --sf-ink: var(--sf-text);
+  --sf-gray: var(--sf-text-muted);
+  --sf-gray-light: var(--sf-border);
+  --sf-secondary: var(--sf-teal);
+  --sf-secondary-dark: var(--sf-teal-600);
+  --sf-secondary-soft: var(--sf-teal-100);
+  --sf-primary-dark: var(--sf-primary-600);
+  --sf-primary-soft: var(--sf-primary-100);
+}
+
+/* Accessibility Modes overrides */
+body.font-dyslexic {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif !important;
+  line-height: 1.8 !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+}
+
+body.high-contrast {
+  --sf-primary: #0000FF !important;
+  --sf-primary-600: #00008B !important;
+  --sf-primary-dark: #00008B !important;
+  --sf-teal: #008000 !important;
+  --sf-secondary: #008000 !important;
+  --sf-text: #000000 !important;
+  --sf-ink: #000000 !important;
+  --sf-text-muted: #000000 !important;
+  --sf-gray: #000000 !important;
+  --sf-bg: #FFFFFF !important;
+  --sf-canvas: #FFFFFF !important;
+  --sf-surface: #FFFFFF !important;
+  --sf-white: #FFFFFF !important;
+  --sf-border: #000000 !important;
+  --sf-gray-light: #000000 !important;
+}
+
+body.reduced-motion *,
+body.reduced-motion *::before,
+body.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@theme inline {
+  --color-primary: var(--sf-primary);
+  --color-primary-dark: var(--sf-primary-600); /* Mapped to 600 */
+  --color-primary-soft: var(--sf-primary-100); /* Mapped to 100 */
+  
+  --color-secondary: var(--sf-teal);
+  --color-secondary-dark: var(--sf-teal-600);
+  --color-secondary-soft: var(--sf-teal-100);
+  
+  --color-ember: var(--sf-ember);
+  --color-ember-dark: var(--sf-ember-600);
+  
+  --color-ink: var(--sf-text);
+  --color-gray-muted: var(--sf-text-muted);
+  --color-gray-border: var(--sf-border);
+  --color-canvas: var(--sf-bg);
+  --color-white: var(--sf-surface);
+  
+  --color-success: var(--sf-success);
+  --color-error: var(--sf-error);
+  --color-warning: var(--sf-warning);
+  --color-blocked: var(--sf-blocked);
+}
+
+body {
+  background-color: var(--sf-bg);
+  color: var(--sf-text);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Component specifics for Dark Mode adjustments if needed */
+.card-dark {
+   background: var(--sf-surface); 
+   color: var(--sf-text); 
+   border-radius: 12px; 
+   padding: 16px; 
+   border: 1px solid var(--sf-border); 
+   box-shadow: var(--sf-shadow-1); 
+}

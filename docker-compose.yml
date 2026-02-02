@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "4011:4011"
+    volumes:
+      - ./backend/prisma/dev.db:/app/prisma/dev.db
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - PORT=4011
+      - JWT_SECRET=supersecretflowkey
+    networks:
+      - stayflow-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "4010:4010"
+    environment:
+      - NEXT_PUBLIC_GRAPHQL_URL=http://localhost:4011/graphql
+    depends_on:
+      - backend
+    networks:
+      - stayflow-network
+
+networks:
+  stayflow-network:
+    driver: bridge

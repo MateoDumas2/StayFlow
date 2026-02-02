@@ -1,0 +1,154 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type Booking {
+  checkIn: String!
+  checkOut: String!
+  guests: Int!
+  id: ID!
+  listing: Listing
+  listingId: String!
+  status: String!
+  totalPrice: Float!
+}
+
+input CreateBookingInput {
+  checkIn: String!
+  checkOut: String!
+  guests: Int!
+  listingId: String!
+  totalPrice: Float!
+}
+
+input CreateListingDto {
+  accessibilityFeatures: [String!]
+  amenities: [String!]
+  description: String!
+  imageUrl: String!
+  location: String!
+  price: Float!
+  rating: Float!
+  title: String!
+  vibes: [String!]
+}
+
+input CreateReviewInput {
+  content: String!
+  listingId: String!
+  rating: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type HostStats {
+  activeListings: Int!
+  totalBookings: Int!
+  totalRevenue: Float!
+}
+
+type Listing {
+  accessibilityFeatures: [String!]
+  amenities: [String!]
+  bookings: [Booking!]
+  description: String!
+  id: String!
+  imageUrl: String!
+  location: String!
+  price: Float!
+  rating: Float!
+  reviews: [Review!]
+  status: String!
+  title: String!
+  travelTime: Float
+  vibes: [String!]
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createBooking(createBookingInput: CreateBookingInput!): Booking!
+  createListing(createListingInput: CreateListingDto!): Listing!
+  createReview(createReviewInput: CreateReviewInput!): Review!
+  login(input: LoginInput!): AuthPayload!
+  markAllNotificationsAsRead: Float!
+  markNotificationAsRead(id: String!): Notification!
+  register(input: RegisterInput!): AuthPayload!
+  removeListing(id: String!): Listing!
+  toggleFavorite(listingId: String!): User!
+  updateProfile(input: UpdateUserInput!): User!
+}
+
+type Notification {
+  createdAt: DateTime!
+  id: ID!
+  link: String
+  message: String!
+  read: Boolean!
+  title: String!
+  type: String!
+  userId: String!
+}
+
+type Query {
+  booking(id: String!): Booking!
+  hostStats: HostStats!
+  listing(id: String!): Listing!
+  listings(accessibility: [String!], maxTravelTime: Float, search: String, vibe: String): [Listing!]!
+  me: User
+  myBookings: [Booking!]!
+  myListings: [Listing!]!
+  myNotifications: [Notification!]!
+  myReviews: [Review!]!
+  ping: String!
+  reviewsByListing(listingId: String!): [Review!]!
+}
+
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+  role: String = "GUEST"
+}
+
+type Review {
+  authorAvatar: String!
+  authorName: String!
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  listingId: String!
+  rating: Int!
+}
+
+input UpdateUserInput {
+  avatar: String
+  email: String
+  name: String
+  password: String
+}
+
+type User {
+  avatar: String
+  createdAt: DateTime!
+  email: String!
+  favorites: [Listing!]
+  flowPoints: Float!
+  flowTier: String!
+  id: ID!
+  name: String!
+  role: String!
+  spotifyConnected: Boolean
+  spotifyDisplayName: String
+}

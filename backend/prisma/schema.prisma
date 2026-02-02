@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Listing {
+  id                    String    @id @default(uuid())
+  title                 String
+  location              String
+  price                 Float
+  rating                Float
+  imageUrl              String
+  status                String
+  description           String
+  amenities             String
+  vibes                 String
+  accessibilityFeatures String
+  travelTime            Float?
+  
+  hostId                String?
+  host                  User?     @relation("HostListings", fields: [hostId], references: [id])
+  
+  bookings              Booking[]
+  reviews               Review[]
+  favoritedBy           User[]
+}
+
+model Booking {
+  id         String   @id @default(uuid())
+  listingId  String
+  listing    Listing  @relation(fields: [listingId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  checkIn    String
+  checkOut   String
+  guests     Int
+  totalPrice Float
+  status     String
+  
+  // Payment Details
+  isSplitPay    Boolean @default(false)
+  invitedEmails String? // Comma separated emails
+}
+
+model Review {
+  id           String   @id @default(uuid())
+  listingId    String
+  listing      Listing  @relation(fields: [listingId], references: [id])
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  content      String
+  rating       Int
+  authorName   String
+  authorAvatar String
+  createdAt    DateTime @default(now())
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("GUEST") // GUEST, HOST
+  createdAt    DateTime @default(now())
+  bookings     Booking[]
+  reviews      Review[]
+  avatar       String?
+  spotifyAccessToken String?
+  spotifyRefreshToken String?
+  spotifyExpiresAt DateTime?
+  spotifyDisplayName String?
+  
+  // Gamification
+  flowPoints   Int      @default(0)
+  flowTier     String   @default("RIPPLE") // RIPPLE, WAVE, SURFER
+
+  favorites    Listing[]
+  listings     Listing[] @relation("HostListings")
+  notifications Notification[]
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      String   // BOOKING_REQUEST, BOOKING_CONFIRMED, REVIEW_RECEIVED, SYSTEM
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  link      String?
+}
