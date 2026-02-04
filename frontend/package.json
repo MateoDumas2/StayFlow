@@ -28,7 +28,8 @@
     "recharts": "^3.7.0"
   },
   "optionalDependencies": {
-    "lightningcss-linux-x64-gnu": "^1.29.1"
+    "lightningcss-linux-x64-gnu": "^1.29.1",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
