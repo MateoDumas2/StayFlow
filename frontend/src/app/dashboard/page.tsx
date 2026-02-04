@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Map, Trophy, Compass, Calendar, Star, Edit2, X, Camera, Save, Loader2 } from 'lucide-react';
+import { Map, Trophy, Compass, Calendar, Star, Edit2, X, Camera, Save, Loader2, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,8 @@ import CollaborativeBoard from '@/components/gamification/CollaborativeBoard';
 import ExplorerLeaderboard from '@/components/gamification/ExplorerLeaderboard';
 import { FlowRewardsCard } from '@/components/gamification/FlowRewardsCard';
 import LuggageChecker from '@/components/features/LuggageChecker';
+import { AccessibilitySettings } from '@/components/ui/AccessibilitySettings';
+import { PropertyCard } from '@/components/ui/PropertyCard';
 import { useTranslation } from 'react-i18next';
 
 const DASHBOARD_QUERY = gql`
@@ -24,6 +26,15 @@ const DASHBOARD_QUERY = gql`
       avatar
       flowPoints
       flowTier
+      favorites {
+        id
+        title
+        location
+        price
+        rating
+        imageUrl
+        status
+      }
     }
     myBookings {
       id
@@ -75,6 +86,7 @@ export default function DashboardPage() {
   const meData = data?.me;
   const bookings = data?.myBookings || [];
   const reviews = data?.myReviews || [];
+  const favorites = meData?.favorites || [];
 
   // Sync data when loaded
   useEffect(() => {
@@ -400,24 +412,65 @@ export default function DashboardPage() {
                         </Link>
                     </div>
                     <div className="divide-y divide-gray-100">
-                        {user.trips.map((trip: any) => (
-                            <div key={trip.id} className="p-6 flex items-center gap-6 hover:bg-gray-50 transition-colors cursor-pointer group">
-                                <div className="w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 relative">
-                                    <Image src={trip.image} alt={trip.destination} fill className="object-cover group-hover:scale-110 transition-transform duration-500" unoptimized />
+                        {user.trips.length > 0 ? (
+                            user.trips.map((trip: any) => (
+                                <div key={trip.id} className="p-6 flex items-center gap-6 hover:bg-gray-50 transition-colors cursor-pointer group">
+                                    <div className="w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 relative">
+                                        <Image src={trip.image} alt={trip.destination} fill className="object-cover group-hover:scale-110 transition-transform duration-500" unoptimized />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="font-bold text-ink">{trip.destination}</h3>
+                                        <p className="text-sm text-gray-500">{trip.dates}</p>
+                                    </div>
+                                    <div>
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                            trip.status === 'Completado' ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-600'
+                                        }`}>
+                                            {trip.status}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="flex-1">
-                                    <h3 className="font-bold text-ink">{trip.destination}</h3>
-                                    <p className="text-sm text-gray-500">{trip.dates}</p>
-                                </div>
-                                <div>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                                        trip.status === 'Completado' ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-600'
-                                    }`}>
-                                        {trip.status}
-                                    </span>
-                                </div>
+                            ))
+                        ) : (
+                            <div className="p-8 text-center text-gray-500">
+                                <p>Aún no tienes viajes registrados.</p>
                             </div>
-                        ))}
+                        )}
+                    </div>
+                </motion.div>
+
+                {/* Favorites Section */}
+                <motion.div variants={item} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+                        <h2 className="text-xl font-bold text-ink flex items-center gap-2">
+                            <Heart className="w-5 h-5 text-red-500" />
+                            Mis Favoritos
+                        </h2>
+                        <Link href="/favorites">
+                            <Button variant="outline" size="sm">Ver todos</Button>
+                        </Link>
+                    </div>
+                    <div className="p-6">
+                        {favorites.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {favorites.slice(0, 2).map((listing: any) => (
+                                    <PropertyCard
+                                        key={listing.id}
+                                        id={listing.id}
+                                        title={listing.title}
+                                        location={listing.location}
+                                        price={listing.price}
+                                        rating={listing.rating}
+                                        imageUrl={listing.imageUrl}
+                                        status={listing.status}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-8 text-gray-500">
+                                <p>No tienes favoritos guardados aún.</p>
+                            </div>
+                        )}
                     </div>
                 </motion.div>
 
@@ -454,6 +507,9 @@ export default function DashboardPage() {
                          ))}
                      </div>
                 </div>
+
+                {/* Accessibility Settings */}
+                <AccessibilitySettings />
             </motion.div>
         </motion.div>
       </div>

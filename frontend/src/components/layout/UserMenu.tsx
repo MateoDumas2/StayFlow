@@ -5,11 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from 'react-i18next';
-import { useAccessibility } from "@/components/providers/AccessibilityProvider";
 import SpotifyConnect from "@/components/features/SpotifyConnect";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { gql, useQuery } from "@apollo/client";
-import { FlowRewardsCard } from "@/components/gamification/FlowRewardsCard";
+import { AccessibilitySettings } from "@/components/ui/AccessibilitySettings";
 
 const ME_QUERY = gql`
   query Me {
@@ -135,29 +134,6 @@ export default function UserMenu() {
                               </div>
                           </div>
                       </Link>
-                      
-                      {currentUser && (
-                        <div className="mt-2">
-                           <FlowRewardsCard 
-                             points={currentUser.flowPoints || 0} 
-                             tier={currentUser.flowTier || 'RIPPLE'} 
-                             userName={currentUser.name} 
-                             compact 
-                           />
-                        </div>
-                      )}
-                  </div>
-                  
-                  <div className="p-2 border-b border-gray-100">
-                    <Link href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                        Mis Puntos y Logros
-                    </Link>
-                    <Link href="/trips" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                        Mis Viajes
-                    </Link>
-                    <Link href="/favorites" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                        Mis Favoritos
-                    </Link>
                   </div>
                   
                   {currentUser?.role === 'HOST' && (
@@ -167,9 +143,6 @@ export default function UserMenu() {
                       </Link>
                     </div>
                   )}
-
-                  {/* Accessibility Section */}
-                  <AccessibilitySection />
 
                   {/* Integrations Section */}
                   <div className="p-4 border-t border-gray-100 bg-gray-50/50">
@@ -203,7 +176,7 @@ export default function UserMenu() {
                       </button>
                   </div>
                    {/* Accessibility Section */}
-                   <AccessibilitySection />
+                   <AccessibilitySettings variant="menu" />
                 </>
               )}
             </motion.div>
@@ -219,49 +192,3 @@ export default function UserMenu() {
     </>
   );
 }
-
-// Subcomponent for Accessibility to handle Context
-function AccessibilitySection() {
-    const { t } = useTranslation();
-    const { isDyslexic, isHighContrast, isReducedMotion, toggleDyslexic, toggleHighContrast, toggleReducedMotion } = useAccessibility();
-
-    return (
-        <div className="p-4 border-b border-gray-100">
-            <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <span>{t('user_menu.accessibility')}</span>
-            </h5>
-            <div className="space-y-2">
-                <ToggleItem 
-                    label={t('user_menu.dyslexic')} 
-                    description={t('user_menu.dyslexic_desc')}
-                    active={isDyslexic} 
-                    onClick={toggleDyslexic} 
-                />
-                <ToggleItem 
-                    label={t('user_menu.high_contrast')} 
-                    description={t('user_menu.high_contrast_desc')}
-                    active={isHighContrast} 
-                    onClick={toggleHighContrast} 
-                />
-                <ToggleItem 
-                    label={t('user_menu.reduced_motion')} 
-                    description={t('user_menu.reduced_motion_desc')}
-                    active={isReducedMotion} 
-                    onClick={toggleReducedMotion} 
-                />
-            </div>
-        </div>
-    );
-}
-
-const ToggleItem = ({ label, description, active, onClick }: { label: string, description: string, active: boolean, onClick: () => void }) => (
-    <div className="flex items-center justify-between cursor-pointer group" onClick={onClick}>
-        <div>
-            <p className={`text-sm font-medium ${active ? 'text-primary' : 'text-gray-700'}`}>{label}</p>
-            <p className="text-[10px] text-gray-400">{description}</p>
-        </div>
-        <div className={`w-10 h-6 rounded-full relative transition-colors ${active ? 'bg-primary' : 'bg-gray-200'}`}>
-            <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${active ? 'left-5' : 'left-1'}`} />
-        </div>
-    </div>
-);
