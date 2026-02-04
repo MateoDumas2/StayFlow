@@ -71,7 +71,7 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
   const [friendsEmails, setFriendsEmails] = useState<string[]>([]);
   const [newFriendEmail, setNewFriendEmail] = useState('');
 
-  const { data: meData } = useQuery(ME_QUERY);
+  const { data: meData, loading: meLoading } = useQuery(ME_QUERY);
 
   const CLEANING_FEE = 40;
   const SERVICE_FEE = 65;
@@ -97,6 +97,8 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
       return;
     }
     
+    if (meLoading) return;
+
     if (!meData?.me) {
       setIsAuthModalOpen(true);
       return;
@@ -281,6 +283,8 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
           </div>
         )}
       </div>
+
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
 
       {/* Payment Modal */}
       <AnimatePresence>
