@@ -23,18 +23,18 @@ export default function CollaborativeBoard() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden transition-colors duration-300">
-      <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-colors duration-300">
+      <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50">
         <div>
-          <h2 className="text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-ink flex items-center gap-2">
             <Users className="w-5 h-5 text-primary" />
             {t('collaborative_board.title')}
           </h2>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{t('collaborative_board.collaborators', { count: 3 })}</p>
+          <p className="text-xs text-gray-500">{t('collaborative_board.collaborators', { count: 3 })}</p>
         </div>
         <div className="flex -space-x-2">
           {[1,2,3].map(i => (
-             <div key={i} className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-gray-800" />
+             <div key={i} className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white" />
           ))}
         </div>
       </div>
@@ -46,8 +46,8 @@ export default function CollaborativeBoard() {
             key={item.id} 
             className={`flex items-center gap-4 p-3 rounded-xl border transition-colors ${
               item.status === 'winning' 
-                ? 'border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800' 
-                : 'border-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700'
+                ? 'border-green-200 bg-green-50' 
+                : 'border-gray-100 bg-white'
             }`}
           >
             <div className="w-16 h-16 rounded-lg overflow-hidden relative flex-shrink-0">
@@ -55,25 +55,25 @@ export default function CollaborativeBoard() {
             </div>
             
             <div className="flex-1">
-              <h3 className="font-bold text-ink dark:text-white">{item.title}</h3>
+              <h3 className="font-bold text-ink">{item.title}</h3>
               {item.status === 'winning' && (
-                <span className="text-xs text-green-600 dark:text-green-400 font-bold flex items-center gap-1">
+                <span className="text-xs text-green-600 font-bold flex items-center gap-1">
                   {t('collaborative_board.winning')}
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
+            <div className="flex items-center gap-3 bg-gray-50 px-3 py-1 rounded-full">
                <button 
                  onClick={() => handleVote(item.id, -1)}
-                 className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full text-gray-400 hover:text-red-500 transition-colors"
+                 className="p-1 hover:bg-gray-200 rounded-full text-gray-400 hover:text-red-500 transition-colors"
                >
                  <ThumbsDown size={14} />
                </button>
-               <span className="font-bold text-ink dark:text-white w-4 text-center">{item.votes}</span>
+               <span className="font-bold text-ink w-4 text-center">{item.votes}</span>
                <button 
                  onClick={() => handleVote(item.id, 1)}
-                 className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full text-gray-400 hover:text-green-500 transition-colors"
+                 className="p-1 hover:bg-gray-200 rounded-full text-gray-400 hover:text-green-500 transition-colors"
                >
                  <ThumbsUp size={14} />
                </button>
@@ -82,7 +82,7 @@ export default function CollaborativeBoard() {
         ))}
       </div>
       
-      <div className="p-4 bg-gray-50 dark:bg-gray-900 text-center border-t border-gray-100 dark:border-gray-800">
+      <div className="p-4 bg-gray-50 text-center border-t border-gray-100">
         <button className="text-sm text-primary font-bold hover:underline">
           {t('collaborative_board.add_property')}
         </button>

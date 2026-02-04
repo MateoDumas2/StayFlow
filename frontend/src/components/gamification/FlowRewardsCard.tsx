@@ -77,15 +77,15 @@ export const FlowRewardsCard: React.FC<FlowRewardsCardProps> = ({ points, tier, 
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden relative">
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden relative">
         {/* Background Pattern */}
         <div className={`absolute inset-0 opacity-5 bg-gradient-to-br ${currentTier.color}`} />
         
         <div className="p-6 relative z-10">
             <div className="flex justify-between items-start mb-6">
                 <div>
-                    <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">FlowRewards</h3>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Hola, {userName}</h2>
+                    <h3 className="text-gray-500 text-sm font-medium mb-1">FlowRewards</h3>
+                    <h2 className="text-2xl font-bold text-gray-900">Hola, {userName}</h2>
                 </div>
                 <div className={`p-3 rounded-xl bg-gradient-to-br ${currentTier.color} text-white shadow-lg transform rotate-3`}>
                     <Icon className="w-8 h-8" />
@@ -100,7 +100,7 @@ export const FlowRewardsCard: React.FC<FlowRewardsCardProps> = ({ points, tier, 
                     <span className="text-gray-500 text-sm font-medium mb-1">FlowPoints</span>
                 </div>
                 
-                <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3 overflow-hidden mb-2">
+                <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden mb-2">
                     <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
@@ -119,13 +119,13 @@ export const FlowRewardsCard: React.FC<FlowRewardsCardProps> = ({ points, tier, 
             </div>
 
             <div className="space-y-3">
-                <h4 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
                     <Trophy className="w-4 h-4 text-amber-500" />
                     Beneficios actuales
                 </h4>
                 <ul className="space-y-2">
                     {currentTier.benefits.map((benefit, index) => (
-                        <li key={index} className="text-sm text-gray-600 dark:text-gray-300 flex items-start gap-2">
+                        <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
                             <span className="text-green-500 mt-0.5">✓</span>
                             {benefit}
                         </li>
@@ -133,7 +133,7 @@ export const FlowRewardsCard: React.FC<FlowRewardsCardProps> = ({ points, tier, 
                 </ul>
             </div>
 
-            <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+            <div className="mt-6 pt-6 border-t border-gray-100">
                 <Button variant="outline" className="w-full text-sm">
                     Ver historial de puntos
                 </Button>
