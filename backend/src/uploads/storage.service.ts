@@ -67,6 +67,7 @@ class CloudinaryStorageProvider implements IStorageProvider {
         { folder: 'stayflow_uploads' },
         (error, result) => {
           if (error) return reject(error);
+          if (!result) return reject(new Error('Cloudinary upload result is undefined'));
           resolve(result.secure_url);
         },
       );
