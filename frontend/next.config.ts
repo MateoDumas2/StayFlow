@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
         hostname: 'fhwsmpnckoxttiybwtxu.supabase.co',
       },
       {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'stayflow.onrender.com',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
       },
