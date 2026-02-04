@@ -49,7 +49,8 @@ export default function CreateListingPage() {
     uploadData.append('file', file);
 
     try {
-      const res = await fetch('http://localhost:4011/uploads', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4011';
+      const res = await fetch(`${apiUrl}/uploads`, {
         method: 'POST',
         body: uploadData,
       });

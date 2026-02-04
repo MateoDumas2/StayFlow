@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/graphql',
-        destination: 'http://127.0.0.1:4011/graphql',
+        destination: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://127.0.0.1:4011/graphql',
       },
     ];
   },
