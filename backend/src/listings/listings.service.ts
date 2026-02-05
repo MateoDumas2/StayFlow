@@ -90,9 +90,12 @@ export class ListingsService {
   }
 
   async create(createListingDto: CreateListingDto, hostId?: string): Promise<Listing> {
+    const defaultImage = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+    
     const listing = await this.prisma.listing.create({
       data: {
         ...createListingDto,
+        imageUrl: createListingDto.imageUrl || defaultImage,
         amenities: createListingDto.amenities?.join(',') || '',
         vibes: createListingDto.vibes?.join(',') || '',
         accessibilityFeatures: createListingDto.accessibilityFeatures?.join(',') || '',
