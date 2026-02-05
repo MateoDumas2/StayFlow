@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { generateAIAltText } from '@/lib/ai-accessibility';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { Heart } from 'lucide-react';
+import { Heart, Trash2 } from 'lucide-react';
 
 const TOGGLE_FAVORITE = gql`
   mutation ToggleFavorite($listingId: String!) {
@@ -36,6 +36,7 @@ export interface PropertyProps {
   rating: number;
   imageUrl: string;
   status: 'available' | 'booked' | 'pending' | 'blocked';
+  onDelete?: (id: string) => void;
 }
 
 export const PropertyCard: React.FC<PropertyProps> = ({
@@ -46,6 +47,7 @@ export const PropertyCard: React.FC<PropertyProps> = ({
   rating,
   imageUrl,
   status,
+  onDelete,
 }) => {
   const { t } = useTranslation();
   const statusColors = {
@@ -120,6 +122,20 @@ export const PropertyCard: React.FC<PropertyProps> = ({
              className={`w-6 h-6 ${isFavorite ? "fill-red-500 text-red-500" : "text-white fill-black/40"}`} 
            />
         </button>
+
+        {onDelete && (
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDelete(id);
+            }}
+            className="absolute top-3 right-12 z-10 hover:scale-110 transition-all focus:outline-none bg-white/80 p-1.5 rounded-full hover:bg-white"
+            title="Eliminar alojamiento"
+          >
+             <Trash2 className="w-4 h-4 text-red-600" />
+          </button>
+        )}
 
         {status !== 'available' && (
             <div className={`absolute top-3 left-3 rounded-md px-2 py-1 text-xs font-semibold ${statusColors[status]}`}>

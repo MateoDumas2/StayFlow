@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import { PropertyCard } from '@/components/ui/PropertyCard';
 
 const GET_HOST_STATS = gql`
@@ -32,6 +32,14 @@ const GET_MY_LISTINGS = gql`
   }
 `;
 
+const DELETE_LISTING = gql`
+  mutation DeleteListing($id: String!) {
+    removeListing(id: $id) {
+      id
+    }
+  }
+`;
+
 export default function HostDashboardPage() {
   const { t } = useTranslation();
   const { data: statsData, loading: statsLoading } = useQuery(GET_HOST_STATS, {
@@ -40,9 +48,24 @@ export default function HostDashboardPage() {
   const { data: listingsData, loading: listingsLoading } = useQuery(GET_MY_LISTINGS, {
     fetchPolicy: 'cache-and-network',
   });
+  
+  const [deleteListing] = useMutation(DELETE_LISTING, {
+    refetchQueries: ['GetMyListings', 'GetHostStats'],
+  });
 
   const stats = statsData?.hostStats || { activeListings: 0, totalBookings: 0, totalRevenue: 0 };
   const listings = listingsData?.myListings || [];
+
+  const handleDelete = async (id: string) => {
+    if (confirm('¿Estás seguro de que quieres eliminar este alojamiento? Esta acción no se puede deshacer.')) {
+      try {
+        await deleteListing({ variables: { id } });
+      } catch (err) {
+        console.error('Error deleting listing:', err);
+        alert('Error al eliminar el alojamiento.');
+      }
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -84,7 +107,11 @@ export default function HostDashboardPage() {
       ) : listings.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {listings.map((listing: any) => (
-            <PropertyCard key={listing.id} {...listing} />
+            <PropertyCard 
+              key={listing.id} 
+              {...listing} 
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       ) : (
