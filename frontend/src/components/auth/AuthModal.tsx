@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useLazyQuery } from '@apollo/client';
 
 const REGISTER_MUTATION = gql`
   mutation Register($input: RegisterInput!) {
@@ -30,6 +30,15 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+const CHECK_USERNAME = gql`
+  query CheckUsername($username: String!) {
+    checkUsername(username: $username) {
+      available
+      suggestions
+    }
+  }
+`;
+
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -44,13 +53,45 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
   const [name, setName] = useState('');
   const [role, setRole] = useState('GUEST');
   const [error, setError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [usernameSuggestions, setUsernameSuggestions] = useState<string[]>([]);
 
   const [register, { loading: registerLoading }] = useMutation(REGISTER_MUTATION);
   const [login, { loading: loginLoading }] = useMutation(LOGIN_MUTATION);
+  
+  const [checkUsername] = useLazyQuery(CHECK_USERNAME, {
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      if (!data.checkUsername.available) {
+        setUsernameError(t('auth.username_taken') || 'Nombre de usuario ya existe');
+        setUsernameSuggestions(data.checkUsername.suggestions);
+      } else {
+        setUsernameError('');
+        setUsernameSuggestions([]);
+      }
+    }
+  });
+
+  // Check username availability
+  React.useEffect(() => {
+    if (mode === 'register' && name.length >= 3) {
+      const timeoutId = setTimeout(() => {
+        checkUsername({ variables: { username: name } });
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    } else {
+      setUsernameError('');
+      setUsernameSuggestions([]);
+    }
+  }, [name, mode, checkUsername]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    if (mode === 'register' && usernameError) {
+      return;
+    }
 
     try {
       if (mode === 'register') {
@@ -128,10 +169,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-shadow"
+                        className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-shadow ${usernameError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'}`}
                         placeholder={t('auth.name_placeholder')}
                         required
                       />
+                      {usernameError && (
+                        <div className="mt-2 animate-in fade-in slide-in-from-top-1">
+                          <p className="text-xs text-red-500 mb-1 flex items-center gap-1">
+                            <span>⚠️</span> {usernameError}
+                          </p>
+                          {usernameSuggestions.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              <span className="text-xs text-gray-500 py-1">Sugerencias:</span>
+                              {usernameSuggestions.map(suggestion => (
+                                <button
+                                  key={suggestion}
+                                  type="button"
+                                  onClick={() => setName(suggestion)}
+                                  className="text-xs bg-primary/10 hover:bg-primary/20 text-primary px-2 py-1 rounded transition-colors font-medium"
+                                >
+                                  {suggestion}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                     
                     <div>

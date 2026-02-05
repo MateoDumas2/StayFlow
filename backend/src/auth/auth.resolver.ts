@@ -18,6 +18,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { UpdateUserInput } from '../users/dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
+import { UsernameCheckResponse } from './dto/username-check.response';
 
 @ObjectType()
 class AuthPayload {
@@ -31,6 +32,11 @@ class AuthPayload {
 @Resolver(() => User)
 export class AuthResolver {
   constructor(private readonly users: UsersService) {}
+
+  @Query(() => UsernameCheckResponse)
+  async checkUsername(@Args('username') username: string) {
+    return this.users.checkUsernameAvailability(username);
+  }
 
   @Mutation(() => AuthPayload)
   async register(@Args('input') input: RegisterInput) {

@@ -106,12 +106,75 @@ export class UsersService {
     return this.toAuthUser(updatedUser);
   }
 
+  async checkUsernameAvailability(name: string): Promise<{ available: boolean; suggestions: string[] }> {
+    const existingUser = await this.prisma.user.findFirst({
+      where: { name: { equals: name, mode: 'insensitive' } },
+    });
+
+    if (!existingUser) {
+      return { available: true, suggestions: [] };
+    }
+
+    const suggestions = await this.generateUsernameSuggestions(name);
+    return { available: false, suggestions };
+  }
+
+  private async generateUsernameSuggestions(baseName: string): Promise<string[]> {
+    const suggestions: string[] = [];
+    let attempts = 0;
+    
+    // Strategy 1: Add random numbers
+    while (suggestions.length < 3 && attempts < 10) {
+      const randomSuffix = Math.floor(Math.random() * 1000);
+      const candidate = `${baseName}${randomSuffix}`;
+      
+      const exists = await this.prisma.user.findFirst({
+        where: { name: { equals: candidate, mode: 'insensitive' } },
+      });
+
+      if (!exists && !suggestions.includes(candidate)) {
+        suggestions.push(candidate);
+      }
+      attempts++;
+    }
+
+    // Strategy 2: Add year if we still need suggestions
+    if (suggestions.length < 3) {
+      const year = new Date().getFullYear();
+      const candidate = `${baseName}${year}`;
+      const exists = await this.prisma.user.findFirst({
+        where: { name: { equals: candidate, mode: 'insensitive' } },
+      });
+      if (!exists && !suggestions.includes(candidate)) {
+        suggestions.push(candidate);
+      }
+    }
+    
+    return suggestions;
+  }
+
   async create(
     email: string,
     name: string,
     password: string,
     role: string = 'GUEST',
   ): Promise<AuthUser> {
+    // Check if email exists
+    const existingEmail = await this.prisma.user.findUnique({
+      where: { email },
+    });
+    if (existingEmail) {
+      throw new Error('Email already in use');
+    }
+
+    // Check if name exists
+    const existingName = await this.prisma.user.findFirst({
+      where: { name: { equals: name, mode: 'insensitive' } },
+    });
+    if (existingName) {
+      throw new Error('Username already taken');
+    }
+
     const passwordHash = await bcrypt.hash(password, 10);
 
     const user = await this.prisma.user.create({
