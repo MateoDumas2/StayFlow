@@ -33,7 +33,10 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/graphql',
-        destination: process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4011/graphql',
+        destination: process.env.NEXT_PUBLIC_GRAPHQL_URL || 
+        (process.env.NODE_ENV === 'production' 
+          ? 'https://stayflow.onrender.com/graphql' 
+          : 'http://localhost:4011/graphql'),
       },
     ];
   },

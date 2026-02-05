@@ -19,7 +19,9 @@ const ME_QUERY = gql`
 
 const SPOTIFY_START_URL =
   process.env.NEXT_PUBLIC_SPOTIFY_START_URL ||
-  'http://localhost:4011/spotify/start';
+  (process.env.NODE_ENV === 'production'
+    ? 'https://stayflow.onrender.com/spotify/start'
+    : 'http://localhost:4011/spotify/start');
 
 export default function SpotifyConnect() {
   const router = useRouter();

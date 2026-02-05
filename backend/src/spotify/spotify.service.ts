@@ -9,7 +9,9 @@ export class SpotifyService {
   private clientSecret = process.env.SPOTIFY_CLIENT_SECRET || '';
   private redirectUri =
     process.env.SPOTIFY_REDIRECT_URI ||
-    'http://localhost:4011/spotify/callback';
+    (process.env.NODE_ENV === 'production'
+      ? 'https://stayflow.onrender.com/spotify/callback'
+      : 'http://localhost:4011/spotify/callback');
 
   constructor(private readonly usersService: UsersService) {}
 

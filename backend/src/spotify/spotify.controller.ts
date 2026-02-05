@@ -47,7 +47,9 @@ export class SpotifyController {
       await this.spotify.handleCallback(code, state);
       const redirectTarget =
         process.env.SPOTIFY_CONNECTED_REDIRECT ||
-        'http://localhost:4010/?spotify=connected';
+    (process.env.NODE_ENV === 'production'
+      ? 'https://stay-flow-frontend.vercel.app/?spotify=connected'
+      : 'http://localhost:4010/?spotify=connected');
       res.redirect(redirectTarget);
     } catch (e: any) {
       res
