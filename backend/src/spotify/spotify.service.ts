@@ -9,7 +9,7 @@ export class SpotifyService {
   private clientSecret = process.env.SPOTIFY_CLIENT_SECRET || '';
   private redirectUri =
     process.env.SPOTIFY_REDIRECT_URI ||
-    'http://127.0.0.1:4011/spotify/callback';
+    'http://localhost:4011/spotify/callback';
 
   constructor(private readonly usersService: UsersService) {}
 

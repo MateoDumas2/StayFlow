@@ -19,7 +19,7 @@ const ME_QUERY = gql`
 
 const SPOTIFY_START_URL =
   process.env.NEXT_PUBLIC_SPOTIFY_START_URL ||
-  'http://127.0.0.1:4011/spotify/start';
+  'http://localhost:4011/spotify/start';
 
 export default function SpotifyConnect() {
   const router = useRouter();

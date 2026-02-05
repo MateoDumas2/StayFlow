@@ -10,7 +10,7 @@ import {
 import React, { useMemo } from "react";
 
 const httpLink = new HttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://127.0.0.1:4011/graphql",
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:4011/graphql",
   fetchOptions: { cache: "no-store" },
 });
 
