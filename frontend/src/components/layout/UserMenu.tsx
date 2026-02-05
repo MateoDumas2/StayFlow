@@ -9,6 +9,7 @@ import SpotifyConnect from "@/components/features/SpotifyConnect";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { gql, useQuery } from "@apollo/client";
 import { AccessibilitySettings } from "@/components/ui/AccessibilitySettings";
+import { getSessions, switchSession, removeSession } from "@/lib/auth-utils";
 
 const ME_QUERY = gql`
   query Me {
@@ -48,6 +49,7 @@ export default function UserMenu() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [otherSessions, setOtherSessions] = useState<any[]>([]);
   const menuRef = useRef<HTMLDivElement>(null);
   const { data: meData } = useQuery(ME_QUERY, {
     skip: !isLoggedIn,
@@ -58,13 +60,20 @@ export default function UserMenu() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-  }, [authModalOpen]);
+    
+    if (token) {
+      const sessions = getSessions();
+      setOtherSessions(sessions.filter(s => s.token !== token));
+    }
+  }, [authModalOpen, isOpen]); // Refresh when menu opens or auth changes
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setIsOpen(false);
-    window.location.reload(); // Simple reload to clear state
+    const token = localStorage.getItem("token");
+    if (token) {
+      removeSession(token);
+    } else {
+      window.location.reload();
+    }
   };
 
   const openAuth = (mode: "login" | "register") => {
@@ -148,6 +157,36 @@ export default function UserMenu() {
                   <div className="p-4 border-t border-gray-100 bg-gray-50/50">
                       <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{t('user_menu.integrations')}</h5>
                       <SpotifyConnect />
+                  </div>
+
+                  {/* Switch Account Section */}
+                  <div className="p-2 border-t border-gray-100">
+                    <h5 className="px-4 py-1 text-xs font-bold text-gray-400 uppercase tracking-wider">Cuentas</h5>
+                    {otherSessions.map((session) => (
+                      <button
+                        key={session.user.id}
+                        onClick={() => switchSession(session.token)}
+                        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                      >
+                        <div className="w-6 h-6 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                          {session.user.avatar ? (
+                            <img src={session.user.avatar} alt={session.user.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-primary text-white text-xs">
+                              {session.user.name.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <span className="truncate flex-1 text-left">{session.user.name}</span>
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => openAuth('login')}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-primary font-medium hover:bg-primary/5 rounded-lg transition-colors"
+                    >
+                      <span className="w-6 h-6 flex items-center justify-center border border-dashed border-primary rounded-full">+</span>
+                      Añadir cuenta existente
+                    </button>
                   </div>
 
                   <div className="p-2 border-t border-gray-100">

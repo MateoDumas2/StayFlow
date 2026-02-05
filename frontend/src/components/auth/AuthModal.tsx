@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { gql, useMutation, useLazyQuery } from '@apollo/client';
+import { saveSession } from '@/lib/auth-utils';
 
 const REGISTER_MUTATION = gql`
   mutation Register($input: RegisterInput!) {
@@ -100,8 +101,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             input: { email, password, name, role },
           },
         });
-        // Here you would typically save the token
-        localStorage.setItem('token', data.register.token);
+        saveSession(data.register.token, data.register.user);
+        window.location.reload();
         onClose();
       } else {
         const { data } = await login({
@@ -109,7 +110,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             input: { email, password },
           },
         });
-        localStorage.setItem('token', data.login.token);
+        saveSession(data.login.token, data.login.user);
+        window.location.reload();
         onClose();
       }
     } catch (err: any) {
