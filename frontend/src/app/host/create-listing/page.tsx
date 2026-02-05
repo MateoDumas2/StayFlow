@@ -21,7 +21,9 @@ const VIBES_OPTIONS = ['Relax', 'Aventura', 'Romántico', 'Lujo', 'Naturaleza', 
 export default function CreateListingPage() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [createListing, { loading }] = useMutation(CREATE_LISTING_MUTATION);
+  const [createListing, { loading }] = useMutation(CREATE_LISTING_MUTATION, {
+    refetchQueries: ['GetMyListings', 'GetHostStats'],
+  });
 
   const [formData, setFormData] = useState({
     title: '',

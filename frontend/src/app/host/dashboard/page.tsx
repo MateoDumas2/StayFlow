@@ -34,8 +34,12 @@ const GET_MY_LISTINGS = gql`
 
 export default function HostDashboardPage() {
   const { t } = useTranslation();
-  const { data: statsData, loading: statsLoading } = useQuery(GET_HOST_STATS);
-  const { data: listingsData, loading: listingsLoading } = useQuery(GET_MY_LISTINGS);
+  const { data: statsData, loading: statsLoading } = useQuery(GET_HOST_STATS, {
+    fetchPolicy: 'cache-and-network',
+  });
+  const { data: listingsData, loading: listingsLoading } = useQuery(GET_MY_LISTINGS, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   const stats = statsData?.hostStats || { activeListings: 0, totalBookings: 0, totalRevenue: 0 };
   const listings = listingsData?.myListings || [];
