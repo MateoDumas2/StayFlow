@@ -47,7 +47,7 @@ export class SpotifyController {
       await this.spotify.handleCallback(code, state);
       const redirectTarget =
         process.env.SPOTIFY_CONNECTED_REDIRECT ||
-        'http://localhost:3001/?spotify=connected';
+        'http://localhost:4010/?spotify=connected';
       res.redirect(redirectTarget);
     } catch (e: any) {
       res
