@@ -7,6 +7,7 @@ import { UsersModule } from '../users/users.module';
   imports: [UsersModule],
   providers: [SpotifyService],
   controllers: [SpotifyController],
+  exports: [SpotifyService],
 })
 export class SpotifyModule {}
 

@@ -31,7 +31,10 @@ class AuthPayload {
 
 @Resolver(() => User)
 export class AuthResolver {
-  constructor(private readonly users: UsersService) {}
+  constructor(
+    private readonly users: UsersService,
+    private readonly spotify: SpotifyService,
+  ) {}
 
   @Query(() => UsernameCheckResponse)
   async checkUsername(@Args('username') username: string) {

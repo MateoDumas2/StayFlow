@@ -47,7 +47,7 @@ export default function RootLayout({
             {children}
           </main>
           <ChatWidget />
-          {/* <GlobalSpotifyPlayer /> */}
+          <GlobalSpotifyPlayer />
         </ApolloWrapper>
         </ThemeProvider>
         </AccessibilityProvider>

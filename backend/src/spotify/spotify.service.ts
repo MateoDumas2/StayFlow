@@ -40,7 +40,7 @@ export class SpotifyService {
       client_id: this.clientId,
       response_type: 'code',
       redirect_uri: this.redirectUri,
-      scope: 'user-read-email user-read-private user-top-read',
+      scope: 'user-read-email user-read-private user-top-read playlist-read-private playlist-read-collaborative',
       state,
     });
 
@@ -97,6 +97,42 @@ export class SpotifyService {
       throw new Error('Failed to fetch Spotify profile');
     }
     return res.json();
+  }
+
+  async refreshAccessToken(refreshToken: string) {
+    if (refreshToken === 'DEMO_REFRESH_TOKEN') {
+      return {
+        accessToken: 'DEMO_ACCESS_TOKEN',
+        refreshToken: 'DEMO_REFRESH_TOKEN',
+        expiresIn: 3600,
+      };
+    }
+
+    const body = new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+    });
+
+    const res = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: body.toString(),
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to refresh Spotify token');
+    }
+
+    const data = await res.json();
+    return {
+      accessToken: data.access_token as string,
+      refreshToken: (data.refresh_token as string) || refreshToken,
+      expiresIn: data.expires_in as number,
+    };
   }
 
   async handleCallback(code: string, state: string) {
