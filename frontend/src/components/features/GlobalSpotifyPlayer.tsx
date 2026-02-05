@@ -21,6 +21,9 @@ const MY_PLAYLISTS_QUERY = gql`
       id
       name
       uri
+      images {
+        url
+      }
     }
   }
 `;
@@ -101,9 +104,16 @@ export default function GlobalSpotifyPlayer() {
                       setCurrentUri(p.uri);
                       setShowPlaylists(false);
                     }}
-                    className="w-full text-left text-xs text-white/80 p-2 hover:bg-[#1DB954]/20 hover:text-white rounded transition-colors truncate border-b border-white/5 last:border-0"
+                    className="w-full flex items-center gap-3 text-left text-xs text-white/80 p-2 hover:bg-[#1DB954]/20 hover:text-white rounded transition-colors border-b border-white/5 last:border-0"
                   >
-                    {p.name}
+                    {p.images?.[0]?.url && (
+                      <img 
+                        src={p.images[0].url} 
+                        alt={p.name} 
+                        className="w-8 h-8 rounded object-cover"
+                      />
+                    )}
+                    <span className="truncate flex-1">{p.name}</span>
                   </button>
                 ))}
                 {(!playlistsData?.mySpotifyPlaylists || playlistsData.mySpotifyPlaylists.length === 0) && (
