@@ -136,6 +136,47 @@ export class AuthResolver {
     }
   }
 
+  @Query(() => [SpotifyPlaylist], { nullable: true })
+  async mySpotifyPlaylists(@Context() ctx: any) {
+    const auth = String(ctx.req?.headers?.authorization || '');
+    const [, token] = auth.split(' ');
+    if (!token) return null;
+
+    try {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET || 'DEV_SECRET',
+      ) as any;
+      
+      const tokens = await this.users.getSpotifyTokens(decoded.sub);
+      if (!tokens) return null;
+
+      let accessToken = tokens.accessToken;
+      
+      // Check if expired
+      if (new Date() > tokens.expiresAt) {
+         try {
+           const newTokens = await this.spotify.refreshAccessToken(tokens.refreshToken);
+           accessToken = newTokens.accessToken;
+           
+           const expiresAt = new Date(Date.now() + newTokens.expiresIn * 1000);
+           await this.users.setSpotifyTokens(decoded.sub, {
+             accessToken: newTokens.accessToken,
+             refreshToken: newTokens.refreshToken,
+             expiresAt,
+           });
+         } catch (e) {
+           console.error("Failed to refresh token", e);
+           return null; 
+         }
+      }
+
+      return await this.spotify.fetchUserPlaylists(accessToken);
+    } catch {
+      return null;
+    }
+  }
+
   @Query(() => String)
   ping() {
     return 'pong';
