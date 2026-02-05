@@ -177,5 +177,54 @@ export class SpotifyService {
       profile,
     };
   }
+
+  async fetchUserPlaylists(accessToken: string) {
+    if (accessToken === 'DEMO_ACCESS_TOKEN') {
+      return [
+        {
+          id: 'demo1',
+          name: 'Vibe Match Demo',
+          description: 'A playlist generated for demo purposes',
+          images: [{ url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop' }],
+          uri: 'spotify:playlist:37i9dQZF1DXcBWIGoYBM5M',
+          externalUrl: 'https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M',
+        },
+        {
+          id: 'demo2',
+          name: 'Chill Vibes',
+          description: 'Relax and unwind',
+          images: [{ url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=300&fit=crop' }],
+          uri: 'spotify:playlist:37i9dQZF1DX4WYpdgoIcn6',
+          externalUrl: 'https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6',
+        },
+      ];
+    }
+
+    try {
+      const res = await fetch('https://api.spotify.com/v1/me/playlists?limit=20', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      
+      if (!res.ok) {
+        console.error('Failed to fetch playlists:', await res.text());
+        return [];
+      }
+
+      const data = await res.json();
+      return data.items.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        images: item.images,
+        uri: item.uri,
+        externalUrl: item.external_urls.spotify,
+      }));
+    } catch (e) {
+      console.error('Error fetching playlists:', e);
+      return [];
+    }
+  }
 }
 
