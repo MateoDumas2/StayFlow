@@ -40,6 +40,16 @@ const ME_QUERY = gql`
   }
 `;
 
+const GET_MY_FRIENDS_SIMPLE = gql`
+  query GetMyFriendsSimple {
+    myFriends {
+      id
+      name
+      avatar
+    }
+  }
+`;
+
 export function BookingCard({ listingId, price, rating, bookings = [] }: BookingCardProps) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -70,8 +80,10 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
   const [isSplitPay, setIsSplitPay] = useState(false);
   const [friendsEmails, setFriendsEmails] = useState<string[]>([]);
   const [newFriendEmail, setNewFriendEmail] = useState('');
+  const [selectedFriendIds, setSelectedFriendIds] = useState<string[]>([]);
 
   const { data: meData, loading: meLoading } = useQuery(ME_QUERY);
+  const { data: friendsData } = useQuery(GET_MY_FRIENDS_SIMPLE, { skip: !meData?.me });
 
   const CLEANING_FEE = 40;
   const SERVICE_FEE = 65;
@@ -133,7 +145,8 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
             guests: parseInt(guests.toString()),
             totalPrice: grandTotal,
             isSplitPay,
-            invitedEmails: friendsEmails
+            invitedEmails: friendsEmails,
+            participantIds: selectedFriendIds
           },
         },
       });
@@ -322,7 +335,7 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
                         <div className="text-center mb-6">
                             <p className="text-gray-500 text-sm">{isSplitPay ? 'Tu parte a pagar' : 'Total a pagar'}</p>
                             <p className="text-3xl font-bold text-ink">
-                              ${(isSplitPay ? grandTotal / (friendsEmails.length + 1) : grandTotal).toFixed(2)}
+                              ${(isSplitPay ? grandTotal / (friendsEmails.length + selectedFriendIds.length + 1) : grandTotal).toFixed(2)}
                             </p>
                             {isSplitPay && (
                               <p className="text-xs text-gray-400 mt-1">Total: ${grandTotal}</p>
@@ -346,32 +359,80 @@ export function BookingCard({ listingId, price, rating, bookings = [] }: Booking
 
                           {isSplitPay && (
                             <div className="space-y-3 mt-3 animate-in fade-in slide-in-from-top-2">
-                              <div className="flex gap-2">
-                                <input 
-                                  type="email" 
-                                  placeholder="Email de tu amigo" 
-                                  className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                  value={newFriendEmail}
-                                  onChange={(e) => setNewFriendEmail(e.target.value)}
-                                  onKeyDown={(e) => e.key === 'Enter' && (setFriendsEmails([...friendsEmails, newFriendEmail]), setNewFriendEmail(''))}
-                                />
-                                <Button 
-                                  size="sm" 
-                                  variant="secondary"
-                                  onClick={() => {
-                                    if(newFriendEmail) {
-                                      setFriendsEmails([...friendsEmails, newFriendEmail]);
-                                      setNewFriendEmail('');
-                                    }
-                                  }}
-                                >
-                                  +
-                                </Button>
+                              {/* Friends Selection */}
+                              <div>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Selecciona amigos:</p>
+                                {friendsData?.myFriends?.length > 0 ? (
+                                   <div className="max-h-40 overflow-y-auto space-y-2 border border-gray-100 rounded-lg p-2 bg-white">
+                                     {friendsData.myFriends.map((friend: any) => (
+                                       <label key={friend.id} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors">
+                                         <input 
+                                           type="checkbox"
+                                           checked={selectedFriendIds.includes(friend.id)}
+                                           onChange={(e) => {
+                                             if(e.target.checked) setSelectedFriendIds([...selectedFriendIds, friend.id]);
+                                             else setSelectedFriendIds(selectedFriendIds.filter(id => id !== friend.id));
+                                           }}
+                                           className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
+                                         />
+                                         <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden relative flex-shrink-0">
+                                             {friend.avatar ? (
+                                                 <img src={friend.avatar} alt={friend.name} className="object-cover w-full h-full" />
+                                             ) : (
+                                                 <div className="w-full h-full flex items-center justify-center bg-primary text-white text-xs font-bold">
+                                                     {friend.name[0]}
+                                                 </div>
+                                             )}
+                                         </div>
+                                         <span className="text-sm text-gray-700 font-medium">{friend.name}</span>
+                                       </label>
+                                     ))}
+                                   </div>
+                                ) : (
+                                   <p className="text-xs text-gray-500 mb-2">No tienes amigos agregados aún.</p>
+                                )}
                               </div>
+
+                              {/* Email Invites */}
+                              <div className="border-t border-gray-100 pt-3">
+                                <p className="text-xs text-gray-500 mb-2">O invita por email:</p>
+                                <div className="flex gap-2">
+                                  <input 
+                                    type="email" 
+                                    placeholder="Email de tu amigo" 
+                                    className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    value={newFriendEmail}
+                                    onChange={(e) => setNewFriendEmail(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && (setFriendsEmails([...friendsEmails, newFriendEmail]), setNewFriendEmail(''))}
+                                  />
+                                  <Button 
+                                    size="sm" 
+                                    variant="secondary"
+                                    onClick={() => {
+                                      if(newFriendEmail) {
+                                        setFriendsEmails([...friendsEmails, newFriendEmail]);
+                                        setNewFriendEmail('');
+                                      }
+                                    }}
+                                  >
+                                    +
+                                  </Button>
+                                </div>
+                              </div>
+
                               <div className="flex flex-wrap gap-2">
                                 <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full border border-primary/20">
                                   Tú (Organizador)
                                 </span>
+                                {selectedFriendIds.map(id => {
+                                  const friend = friendsData?.myFriends?.find((f: any) => f.id === id);
+                                  return friend ? (
+                                    <span key={id} className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-100 flex items-center gap-1">
+                                      {friend.name}
+                                      <button onClick={() => setSelectedFriendIds(selectedFriendIds.filter(fid => fid !== id))} className="hover:text-red-500 ml-1">×</button>
+                                    </span>
+                                  ) : null;
+                                })}
                                 {friendsEmails.map((email, idx) => (
                                   <span key={idx} className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full flex items-center gap-1">
                                     {email}

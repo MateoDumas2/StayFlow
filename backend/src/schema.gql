@@ -22,6 +22,8 @@ input CreateBookingInput {
   checkIn: String!
   checkOut: String!
   guests: Int!
+  invitedEmails: [String!]
+  isSplitPay: Boolean
   listingId: String!
   totalPrice: Float!
 }

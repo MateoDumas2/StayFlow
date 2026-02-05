@@ -474,6 +474,33 @@ export default function DashboardPage() {
                     </div>
                 </motion.div>
 
+                {/* Friends Section */}
+                <motion.div variants={item} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+                        <h2 className="text-xl font-bold text-ink flex items-center gap-2">
+                            <Users className="w-5 h-5 text-primary" />
+                            Mis Amigos
+                        </h2>
+                        <Link href="/dashboard/friends">
+                            <Button variant="outline" size="sm">Gestionar</Button>
+                        </Link>
+                    </div>
+                    <div className="p-6 flex flex-col items-center justify-center text-center py-10">
+                        <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+                            <Users className="w-8 h-8 text-primary" />
+                        </div>
+                        <h3 className="text-lg font-bold text-ink mb-2">Conecta con otros viajeros</h3>
+                        <p className="text-gray-500 max-w-sm mb-6">
+                            Agrega amigos para planear viajes juntos y dividir gastos fácilmente.
+                        </p>
+                        <Link href="/dashboard/friends">
+                            <Button variant="primary">
+                                Buscar Amigos
+                            </Button>
+                        </Link>
+                    </div>
+                </motion.div>
+
                 {/* Social Gamification - Collaborative Boards */}
                 <motion.div variants={item}>
                     <CollaborativeBoard />

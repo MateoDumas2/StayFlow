@@ -52,11 +52,28 @@ export class BookingsService {
         status: 'confirmed',
         isSplitPay: createBookingInput.isSplitPay || false,
         invitedEmails: createBookingInput.invitedEmails ? createBookingInput.invitedEmails.join(',') : null,
+        participants: createBookingInput.participantIds ? {
+          connect: createBookingInput.participantIds.map(id => ({ id }))
+        } : undefined,
       },
       include: {
         listing: true,
+        participants: true,
       },
     });
+
+    // Notify Participants
+    if (createBookingInput.participantIds && createBookingInput.participantIds.length > 0) {
+       for (const participantId of createBookingInput.participantIds) {
+          await this.notificationsService.create(
+             participantId,
+             'TRIP_INVITATION',
+             '¡Te han invitado a un viaje!',
+             `Has sido añadido a una reserva en ${booking.listing.title}.`,
+             `/trips`
+          );
+       }
+    }
 
     // Award FlowPoints for booking
     // 1000 points per booking

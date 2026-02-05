@@ -22,4 +22,7 @@ export class CreateBookingInput {
 
   @Field(() => [String], { nullable: true })
   invitedEmails?: string[];
+
+  @Field(() => [String], { nullable: true })
+  participantIds?: string[];
 }

@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
 import { SpotifyModule } from './spotify/spotify.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     SpotifyModule,
     UploadsModule,
     NotificationsModule,
+    FriendsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

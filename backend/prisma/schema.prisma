@@ -44,6 +44,9 @@ model Booking {
   // Payment Details
   isSplitPay    Boolean @default(false)
   invitedEmails String? // Comma separated emails
+  
+  // Split Pay Participants (Friends)
+  participants  User[]  @relation("BookingParticipants")
 }
 
 model Review {
@@ -81,13 +84,33 @@ model User {
   favorites    Listing[]
   listings     Listing[] @relation("HostListings")
   notifications Notification[]
+
+  // Friendships
+  sentFriendRequests     Friendship[] @relation("FriendshipRequester")
+  receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
+  
+  // Booking Participation (Split Pay)
+  participatingBookings Booking[] @relation("BookingParticipants")
+}
+
+model Friendship {
+  id          String   @id @default(uuid())
+  requesterId String
+  requester   User     @relation("FriendshipRequester", fields: [requesterId], references: [id])
+  addresseeId String
+  addressee   User     @relation("FriendshipAddressee", fields: [addresseeId], references: [id])
+  status      String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([requesterId, addresseeId])
 }
 
 model Notification {
   id        String   @id @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
-  type      String   // BOOKING_REQUEST, BOOKING_CONFIRMED, REVIEW_RECEIVED, SYSTEM
+  type      String   // BOOKING_REQUEST, BOOKING_CONFIRMED, REVIEW_RECEIVED, SYSTEM, FRIEND_REQUEST
   title     String
   message   String
   read      Boolean  @default(false)
