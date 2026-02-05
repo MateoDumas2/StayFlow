@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Map, Trophy, Compass, Calendar, Star, Edit2, X, Camera, Save, Loader2, Heart } from 'lucide-react';
+import { Map, Trophy, Compass, Calendar, Star, Edit2, X, Camera, Save, Loader2, Heart, Users } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
