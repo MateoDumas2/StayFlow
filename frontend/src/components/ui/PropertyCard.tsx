@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { generateAIAltText } from '@/lib/ai-accessibility';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { Heart, Trash2 } from 'lucide-react';
+import { Heart, Trash2, Edit } from 'lucide-react';
 
 const TOGGLE_FAVORITE = gql`
   mutation ToggleFavorite($listingId: String!) {
@@ -37,6 +37,7 @@ export interface PropertyProps {
   imageUrl: string;
   status: 'available' | 'booked' | 'pending' | 'blocked';
   onDelete?: (id: string) => void;
+  onEdit?: (id: string) => void;
 }
 
 export const PropertyCard: React.FC<PropertyProps> = ({
@@ -48,6 +49,7 @@ export const PropertyCard: React.FC<PropertyProps> = ({
   imageUrl,
   status,
   onDelete,
+  onEdit,
 }) => {
   const { t } = useTranslation();
   const statusColors = {
@@ -134,6 +136,20 @@ export const PropertyCard: React.FC<PropertyProps> = ({
             title="Eliminar alojamiento"
           >
              <Trash2 className="w-4 h-4 text-red-600" />
+          </button>
+        )}
+
+        {onEdit && (
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onEdit(id);
+            }}
+            className="absolute top-3 right-20 z-10 hover:scale-110 transition-all focus:outline-none bg-white/80 p-1.5 rounded-full hover:bg-white"
+            title="Editar alojamiento"
+          >
+             <Edit className="w-4 h-4 text-blue-600" />
           </button>
         )}
 

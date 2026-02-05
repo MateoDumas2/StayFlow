@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { PropertyCard } from '@/components/ui/PropertyCard';
 
@@ -42,6 +43,7 @@ const DELETE_LISTING = gql`
 
 export default function HostDashboardPage() {
   const { t } = useTranslation();
+  const router = useRouter();
   const { data: statsData, loading: statsLoading } = useQuery(GET_HOST_STATS, {
     fetchPolicy: 'cache-and-network',
   });
@@ -65,6 +67,10 @@ export default function HostDashboardPage() {
         alert('Error al eliminar el alojamiento.');
       }
     }
+  };
+
+  const handleEdit = (id: string) => {
+    router.push(`/host/edit-listing/${id}`);
   };
 
   return (
@@ -111,6 +117,7 @@ export default function HostDashboardPage() {
               key={listing.id} 
               {...listing} 
               onDelete={handleDelete}
+              onEdit={handleEdit}
             />
           ))}
         </div>

@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma.service';
 import { Listing } from './entities/listing.entity';
 import { CreateListingDto } from './dto/create-listing.dto';
 
+import { UpdateListingDto } from './dto/update-listing.dto';
+
 @Injectable()
 export class ListingsService {
   constructor(private prisma: PrismaService) {}
@@ -99,6 +101,30 @@ export class ListingsService {
       }
     });
     return listing as any;
+  }
+
+  async update(id: string, updateListingDto: UpdateListingDto): Promise<Listing> {
+    const data: any = { ...updateListingDto };
+    
+    if (updateListingDto.amenities) {
+      data.amenities = updateListingDto.amenities.join(',');
+    }
+    if (updateListingDto.vibes) {
+      data.vibes = updateListingDto.vibes.join(',');
+    }
+    if (updateListingDto.accessibilityFeatures) {
+      data.accessibilityFeatures = updateListingDto.accessibilityFeatures.join(',');
+    }
+
+    try {
+      const listing = await this.prisma.listing.update({
+        where: { id },
+        data,
+      });
+      return listing as any;
+    } catch (e) {
+      throw new NotFoundException(`Listing with ID ${id} not found`);
+    }
   }
 
   async findAllByHost(hostId: string): Promise<Listing[]> {
