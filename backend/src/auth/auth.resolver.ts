@@ -19,6 +19,8 @@ import * as jwt from 'jsonwebtoken';
 import { UpdateUserInput } from '../users/dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { UsernameCheckResponse } from './dto/username-check.response';
+import { SpotifyService } from '../spotify/spotify.service';
+import { SpotifyPlaylist } from '../spotify/dto/spotify-playlist.entity';
 
 @ObjectType()
 class AuthPayload {
